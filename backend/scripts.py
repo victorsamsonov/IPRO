@@ -119,11 +119,13 @@ def dict_to_df():
 
 N_SEMESTERS = 3
 CLASSES = ["CS 100", "CS 116", "CS 350", "CS 450", "CS 351", "CS 340", "CS 440", "CS 430", "CS 485", "CS 487", "CS 484",
-           "CS 422", "MATH 151", "MATH 152", "MATH 251", "MATH 322", "MATH 252", "CS 331", "CS 330", "MATH 474"]
+           "CS 422", "MATH 151", "MATH 152", "MATH 251", "MATH 322", "MATH 252", "CS 331", "CS 330", "MATH 474", "ELECT 1", "ELECT 2",
+           "ELECT 3"]
 
 professor_dict = {}
 
-for i in range(10):
+for i in range(1, 16):
+
     professor_dict[f"Professor_{i}"] = {}
     professor_dict[f"Professor_{i}"]["CLASSES"] = {s+1: [] for s in range(N_SEMESTERS)}
     # print("Difficulty")
@@ -143,6 +145,7 @@ for k in professor_dict:
             for s in professor_dict[k]['CLASSES']:
                 professor_dict[k]['CLASSES'][s].append((choice, generate_grade(difficulty)))
 
+
 # print(professor_dict)
 df_dict, df = dict_to_df()
 df["CLASS"] = None
@@ -154,18 +157,13 @@ new_df = df.copy()
 professor_df_dict = {"PROFESSOR": [], "SEMESTER": [], "CLASS": [], "AVG": [], "N_STUDENTS": [], "A": [], "B": [], "C": [], "D": [], "E": []}  # Maybe include difficulty if needed
 for professor in professor_dict:
     curr_student_idx = 0
-    # print(professor)
     curr_prof = professor_dict[professor]
     for curr_semester in curr_prof["CLASSES"]:
-        print("THE K")
-        print(k)
         semester_class = curr_prof["CLASSES"][curr_semester]
         for c in semester_class:
             n_students = random.randint(20, 120)
             professor_df_dict["PROFESSOR"].append(professor)
             professor_df_dict["CLASS"].append(c[0])
-            print(k)
-            print(semester_mapping[curr_semester])
             professor_df_dict["SEMESTER"].append(semester_mapping[curr_semester])
             professor_df_dict["AVG"].append(c[1])
             professor_df_dict["N_STUDENTS"].append(n_students)
